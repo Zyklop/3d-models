@@ -2,6 +2,8 @@ baseWidth = 100;
 height = 150;
 holeDist = 16;
 radius = 10;
+bucketWidth = 50;
+bucketHeight = 20;
 
 module horz_bar(){
     difference() {
@@ -100,7 +102,7 @@ union(){
     translate([2.5,0,0]) {
         rotate([0,270,0]){
             linear_extrude(height = 5){
-                polygon(points = [[0,height], [0, height-20], [height/1.5, height/4], [height/1.1, height/1.5], [height, height]]);
+                polygon(points = [[0,height], [0, height-bucketWidth], [height/1.5, height/4], [height/1.1, height/1.5], [height, height]]);
             } 
         } 
     }
@@ -108,12 +110,21 @@ union(){
     translate([baseWidth + 2.5,0,0]) {
         rotate([0,270,0]){
             linear_extrude(height = 5){
-                polygon(points = [[0,height], [0, height-20], [height/1.5, height/4], [height/1.1, height/1.5], [height, height]]);
+                polygon(points = [[0,height], [0, height-bucketWidth], [height/1.5, height/4], [height/1.1, height/1.5], [height, height]]);
             } 
         } 
     }
-    translate(v = [0, height - 20, 0]){
-        cube([baseWidth, 20, 2]);
+    translate(v = [0, height - bucketWidth, 0]){
+        union() {
+            cube([baseWidth, bucketWidth, 2]);
+            cube([baseWidth, 5, bucketHeight]);
+            translate([0, bucketWidth - 5, 0]){
+                cube([baseWidth, 5, bucketHeight]);
+            } 
+            translate([baseWidth/2, 0, 0]) {
+                cube([5, bucketWidth, bucketHeight]);
+            } 
+        }
     } 
     //bridges
     translate([0, height/2.5, height / 1.65]) {
